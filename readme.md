@@ -1,0 +1,3 @@
+- Mongo DB Note taker
+- Uses JQuery
+- Restyled with grid
