@@ -3,7 +3,13 @@ var express = require("express");
 var mongojs = require("mongojs");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
-
+//Set up mongoose connection
+var mongoose = require('mongoose');
+var mongoDB = 'mongodb://root:RootUser123@ds043082.mlab.com:43082/note_taker';
+mongoose.connect(mongoDB);
+mongoose.Promise = global.Promise;
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 var app = express();
 
 // Set the app up with morgan.
@@ -25,7 +31,7 @@ var databaseUrl = "notetaker";
 var collections = ["notes"];
 
 // Hook mongojs config to db variable
-var db = mongojs(databaseUrl, collections);
+var db =process.env.MONGODB_URI || mongojs(databaseUrl, collections);
 
 // Log any mongojs errors to console
 db.on("error", function(error) {
